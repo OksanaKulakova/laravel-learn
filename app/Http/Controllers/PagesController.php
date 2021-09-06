@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Article;
 
 class PagesController extends Controller
 {
     public function index()
     {
-        return view('pages/homepage');
+        $articles = Article::whereNotNull('published_at')->latest('published_at')->limit(3)->get();
+
+        return view('pages/homepage', compact('articles'));
     }
 
     public function about()
