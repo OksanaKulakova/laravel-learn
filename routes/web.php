@@ -20,3 +20,4 @@ Route::get('/contacts', [PagesController::class, 'contacts'])->name('contacts');
 Route::get('/sales', [PagesController::class, 'sales'])->name('sales');
 Route::get('/financial', [PagesController::class, 'financial'])->name('financial');
 Route::get('/clients', [PagesController::class, 'clients'])->name('clients');
+Route::get('/articles', [PagesController::class, 'articles'])->name('articles');

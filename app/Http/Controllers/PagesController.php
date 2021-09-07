@@ -38,4 +38,11 @@ class PagesController extends Controller
     {
         return view('pages/clients');
     }
+
+    public function articles()
+    {
+        $articles = Article::whereNotNull('published_at')->get();
+
+        return view('pages/articles', compact('articles'));
+    }
 }
