@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Article;
 
 class PagesController extends Controller
 {
@@ -37,12 +36,5 @@ class PagesController extends Controller
     public function clients()
     {
         return view('pages/clients');
-    }
-
-    public function articles()
-    {
-        $articles = Article::whereNotNull('published_at')->get();
-
-        return view('pages/articles', compact('articles'));
     }
 }
