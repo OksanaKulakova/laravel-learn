@@ -22,5 +22,4 @@ Route::get('/sales', [PagesController::class, 'sales'])->name('sales');
 Route::get('/financial', [PagesController::class, 'financial'])->name('financial');
 Route::get('/clients', [PagesController::class, 'clients'])->name('clients');
 
-Route::get('/articles', [ArticleController::class, 'index'])->name('articles');
-Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('article');
+Route::resource('articles', ArticleController::class);
