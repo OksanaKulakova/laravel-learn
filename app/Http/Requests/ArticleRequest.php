@@ -27,7 +27,7 @@ class ArticleRequest extends FormRequest
     {
         return [
             'slug' => 'unique:articles',
-            'title' => 'required|min:5|max:100|unique:articles',
+            'title' => 'required|min:5|max:100|',
             'description' => 'required|max:255',
             'body' => 'required',
             'published_at' => '',
