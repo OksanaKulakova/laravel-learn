@@ -4,6 +4,7 @@
 
 @section('content-page') 
     @if($articles)
+        <a class="hover:text-orange" href="{{ route('articles.create') }}">Добавить новость</a>
         <section class="news-block-inverse px-6 py-4">
             <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-6">
                 @foreach($articles as $article)

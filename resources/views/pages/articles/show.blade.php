@@ -4,7 +4,7 @@
 
 @section('content-page')
     @if($article)
-       
+        <a class="hover:text-orange" href="{{ route('articles.edit', $article) }}">Редактировать</a>
         <div class="space-y-4">
 
             <img src="/assets/pictures/car_new_stinger.png" alt="" title="">
