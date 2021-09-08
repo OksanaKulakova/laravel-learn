@@ -10,27 +10,18 @@
         @csrf
         @method('PATCH')
 
-        <div class="mt-8 max-w-md">
-            <div class="grid grid-cols-1 gap-6">
-                <x-input.group for="title" label="Название новости">
-                    <x-input.text name="title" placeholder="Название новости" value="{{ old('title', $article->title) }}"/>
-                </x-input.group>
+        @include('pages.articles.form')
+    </form>
 
-                <x-input.group for="description" label="Краткое описание новости">
-                    <x-input.text name="description" placeholder="Краткое описание новости" value="{{ old('description', $article->description) }}"/>
-                </x-input.group>
+    <br>
 
-                <x-input.group for="body" label="Детальное описание">
-                    <x-input.textarea name="body" placeholder="Детальное описание" value="{{ old('body', $article->body) }}"/>
-                </x-input.group>
+    <form action="{{ route('articles.destroy', $article) }}" method="post" enctype="multipart/form-data">
+        @csrf
+        @method('DELETE')
 
-                <x-input.checkbox name="published_at" label="Опубликован" value="{{ old('published_at', $article->published_at) }}"/>
-
-                <x-input.group>
-                    <x-input.button-orange type="submit" text="Сохранить"/>
-                </x-input.group>
-            </div>
-        </div>
+        <x-input.group>
+            <x-input.button-grey type="submit" text="Удалить"/>
+        </x-input.group>
     </form>
 
 @endsection
