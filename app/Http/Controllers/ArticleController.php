@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use App\Models\Article;
+use App\Http\Requests\ArticleRequest;
 
 class ArticleController extends Controller
 {
@@ -26,21 +27,11 @@ class ArticleController extends Controller
         return view('pages.articles.create');
     }
 
-    public function store(Request $request)
+    public function store(ArticleRequest $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|min:5|max:100|unique:articles',
-            'description' => 'required|max:255',
-            'body' => 'required',
-        ]);
+        $validated = $request->validated();
 
-        Article::create([
-            'slug' => Str::slug($request->title, "-"),
-            'title' => $request->title,
-            'description' => $request->description,
-            'body' => $request->body,
-            'published_at' => $request->has('published_at') ? Carbon::now() : null,
-        ]);
+        Article::create($validated);
 
         return redirect()->route('articles.index');
     }
