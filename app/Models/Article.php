@@ -9,6 +9,18 @@ class Article extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'slug',
+        'title',
+        'description',
+        'body',
+        'published_at',
+    ];
+
+    protected $dates = [
+        'published_at',
+    ];
+
     public function getRouteKeyName()
     {
         return 'slug';
