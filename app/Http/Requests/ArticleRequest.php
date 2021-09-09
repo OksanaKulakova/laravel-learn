@@ -26,11 +26,11 @@ class ArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            'slug' => 'unique:articles',
+            'slug' => 'exclude_if:_method,PATCH|unique:articles',
             'title' => 'required|min:5|max:100|',
             'description' => 'required|max:255',
             'body' => 'required',
-            'published_at' => '',
+            'published_at' => 'exclude_if:_method,PATCH|nullable|date',
         ];
     }
 

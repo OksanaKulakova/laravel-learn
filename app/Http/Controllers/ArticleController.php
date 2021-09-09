@@ -22,9 +22,9 @@ class ArticleController extends Controller
         return view('pages.articles.show', compact('article'));
     }
 
-    public function create()
+    public function create(Article $article)
     {
-        return view('pages.articles.create');
+        return view('pages.articles.create', compact('article'));
     }
 
     public function store(ArticleRequest $request)
@@ -32,6 +32,27 @@ class ArticleController extends Controller
         $validated = $request->validated();
 
         Article::create($validated);
+
+        return redirect()->route('articles.index');
+    }
+
+    public function edit(Article $article)
+    {
+        return view('pages.articles.edit', compact('article'));
+    }
+
+    public function update(Article $article, ArticleRequest $request)
+    {
+        $validated = $request->validated();
+
+        $article->update($validated);
+
+        return redirect()->route('articles.index');
+    }
+
+    public function destroy(Article $article)
+    {
+        $article->delete();
 
         return redirect()->route('articles.index');
     }
