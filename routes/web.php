@@ -28,3 +28,7 @@ Route::resource('articles', ArticleController::class);
 Route::group(['prefix' => 'catalog'], function () {
     Route::get('/', [CarController::class, 'index'])->name('products.index');
 });
+
+Route::group(['prefix' => 'products'], function () {
+    Route::get('/{id}', [CarController::class, 'show'])->name('products.show');
+});

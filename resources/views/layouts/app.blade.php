@@ -14,6 +14,8 @@
     <script src="/assets/js/vendor/slick.min.js"></script>
     
     <script src="/assets/js/script.js"></script>
+    @stack('scripts')
+    
     <title>@yield('title')</title>
     <link href="/assets/favicon.ico" rel="shortcut icon" type="image/x-icon">
 </head>
