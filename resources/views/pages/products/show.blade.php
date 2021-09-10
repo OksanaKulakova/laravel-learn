@@ -23,8 +23,13 @@
             <div class="col-span-1 lg:col-span-2">
                 <div class="space-y-4 w-full">
                     <div class="block px-4">
-                        <p class="text-base line-through text-gray-400">{{ number_format($product->old_price, 0, '.', ' ') }} ₽</p>
+
+                        @if($product->old_price)
+                            <p class="text-base line-through text-gray-400">{{ number_format($product->old_price, 0, '.', ' ') }} ₽</p>
+                        @endif
+
                         <p class="font-bold text-2xl text-orange">{{ number_format($product->price, 0, '.', ' ') }} ₽</p>
+                        
                         <div class="mt-4 block">
                             <form>
                                 <button class="inline-block bg-orange hover:bg-opacity-70 focus:outline-none text-white font-bold py-2 px-4 rounded">
