@@ -30,7 +30,7 @@
         </div>
     </section>
     
-    <x-products.week :products="$products"/>
+    <x-panels.week :products="$products"/>
     <x-panels.home-articles :articles="$articles"/>
 
 @endsection

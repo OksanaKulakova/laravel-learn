@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,7 @@ Route::get('/financial', [PagesController::class, 'financial'])->name('financial
 Route::get('/clients', [PagesController::class, 'clients'])->name('clients');
 
 Route::resource('articles', ArticleController::class);
+
+Route::group(['prefix' => 'catalog'], function () {
+    Route::get('/', [CarController::class, 'index'])->name('products.index');
+});
