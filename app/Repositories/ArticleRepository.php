@@ -15,6 +15,6 @@ class ArticleRepository extends BaseRepository implements ArticleRepositoryContr
 
     public function getPublishedArticles()
     {
-        return $this->model->whereNotNull('published_at')->latest('published_at')->get();
+        return $this->model->whereNotNull('published_at')->latest('published_at')->paginate(5);
     }
 }

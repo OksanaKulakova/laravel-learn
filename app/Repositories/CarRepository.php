@@ -12,4 +12,9 @@ class CarRepository extends BaseRepository implements CarRepositoryContract
     {
         parent::__construct($model);
     }
+
+    public function all()
+    {
+        return $this->model->paginate(16);    
+    }
 }
