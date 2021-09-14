@@ -7,6 +7,8 @@ use Illuminate\Support\Str;
 use Carbon\Carbon;
 use App\Models\Article;
 use App\Http\Requests\ArticleRequest;
+use App\Http\Requests\TagRequest;
+use App\Services\TagsSynchronizer;
 
 class ArticleController extends Controller
 {
@@ -27,11 +29,15 @@ class ArticleController extends Controller
         return view('pages.articles.create', compact('article'));
     }
 
-    public function store(ArticleRequest $request)
+    public function store(ArticleRequest $request, TagRequest $tagRequest, TagsSynchronizer $tagsSynchronizer)
     {
         $validated = $request->validated();
 
-        Article::create($validated);
+        $article = Article::create($validated);
+
+        $tags = $tagRequest->getTagsCollection();
+        
+        $tagsSynchronizer->sync($tags, $article);
 
         return redirect()->route('articles.index');
     }
@@ -41,8 +47,12 @@ class ArticleController extends Controller
         return view('pages.articles.edit', compact('article'));
     }
 
-    public function update(Article $article, ArticleRequest $request)
+    public function update(Article $article, ArticleRequest $request, TagRequest $tagRequest, TagsSynchronizer $tagsSynchronizer)
     {
+        $tags = $tagRequest->getTagsCollection();
+        
+        $tagsSynchronizer->sync($tags, $article);
+
         $validated = $request->validated();
 
         $article->update($validated);

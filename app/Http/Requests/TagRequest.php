@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class TagRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'tags' => 'string|nullable',
+        ];
+    }
+
+    public function getTagsCollection()
+    {
+        $tagsString = $this->validator->validated()['tags'];
+
+        $collection = collect(explode(',', trim($tagsString)))->map(function ($tag) {
+            return trim($tag);
+        })->reject(function ($tag) {
+            return empty($tag);
+        })->unique();
+
+        return $collection;
+    }
+}
