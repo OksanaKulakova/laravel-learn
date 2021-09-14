@@ -4,16 +4,23 @@ namespace App\Services;
 
 use App\Contracts\Interfaces\HasTags;
 use Illuminate\Support\Collection;
-use App\Models\Tag;
+use App\Contracts\TagRepositoryContract;
 
 class TagsSynchronizer
 {
+    private $tagRepository;
+  
+    public function __construct(TagRepositoryContract $tagRepository)
+    {
+        $this->tagRepository = $tagRepository;
+    }
+
     public function sync(Collection $tags, HasTags $model)
     {
         $oldTags = $model->tags;
 
         $baseTags = $tags->map(function ($tag) {
-            return Tag::firstOrCreate(['name' => $tag]);
+            return $this->tagRepository->firstOrCreate(['name' => $tag]);
         });
 
         $newTags = $baseTags->filter(function ($tag) use ($oldTags) {
