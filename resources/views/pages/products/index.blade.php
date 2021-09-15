@@ -11,6 +11,7 @@
             <x-products.loop :products="$products"/>
         @endif 
 
+        {{ $products->onEachSide(2)->links() }}
     </div>
      
 @endsection
