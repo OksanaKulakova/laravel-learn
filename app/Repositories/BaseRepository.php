@@ -3,6 +3,7 @@
 namespace App\Repositories;   
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use App\Contracts\BaseRepositoryContract;
 
 class BaseRepository implements BaseRepositoryContract 
@@ -14,43 +15,13 @@ class BaseRepository implements BaseRepositoryContract
         $this->model = $model;
     }
 
-    public function find($id)
+    public function find($id): ?Model
     {
         return $this->model->find($id);
     }
 
-    public function findBySlug($slug)
-    {
-        return $this->model->where('slug', $slug)->first();
-    }
-
-    public function create(array $attributes)
-    {
-        return $this->model->create($attributes);
-    }
-
-    public function update(array $attributes)
-    {
-        $this->model->update($attributes);
-    }
-
-    public function delete()
-    {
-        $this->model->delete();  
-    }
-
-    public function new()
-    {
-        return $this->model;
-    }
-
-    public function all()
+    public function all(): Collection
     {
         return $this->model->all();    
-    }
-
-    public function firstOrCreate($array)
-    {
-        return $this->model->firstOrCreate($array);
     }
 }
