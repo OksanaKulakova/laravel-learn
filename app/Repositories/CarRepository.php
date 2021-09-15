@@ -15,6 +15,6 @@ class CarRepository extends BaseRepository implements CarRepositoryContract
 
     public function all()
     {
-        return $this->model->paginate(16);    
+        return $this->model->latest()->paginate(16);    
     }
 }
