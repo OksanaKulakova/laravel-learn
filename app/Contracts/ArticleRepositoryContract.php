@@ -1,10 +1,23 @@
 <?php
+
 namespace App\Contracts;
 
-use App\Model\Article;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface ArticleRepositoryContract extends BaseRepositoryContract
 {
-   public function getPublishedArticles();
+   public function findBySlug($slug): ?Model;
+
+   public function create(array $attributes): Model;
+
+   public function update(array $attributes): void;
+
+   public function delete(): void;
+
+   public function new(): Model;
+
+   public function getPublishedArticles(): LengthAwarePaginator;
+
 }

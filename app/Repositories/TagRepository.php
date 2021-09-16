@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Tag;
 use App\Contracts\TagRepositoryContract;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class TagRepository extends BaseRepository implements TagRepositoryContract
 {
@@ -13,4 +13,8 @@ class TagRepository extends BaseRepository implements TagRepositoryContract
         parent::__construct($model);
     }
 
+    public function firstOrCreate($array): ?Model
+    {
+        return $this->model->firstOrCreate($array);
+    }
 }

@@ -17,14 +17,14 @@ class TagsSynchronizer
 
     public function sync(Collection $tags, HasTags $model)
     {
-        $oldTags = $model->tags;
-
         $baseTags = $tags->map(function ($tag) {
             return $this->tagRepository->firstOrCreate(['name' => $tag]);
         });
 
-        $newTags = $baseTags->filter(function ($tag) use ($oldTags) {
-            return !$oldTags->contains('id', $tag->id);
+        $model->tags()->detach();
+
+        $newTags = $baseTags->filter(function ($tag) use ($baseTags) {
+            return $baseTags->contains('id', $tag->id);
         });
 
         $newTags->map(function ($tag) use ($model) {
