@@ -19,7 +19,7 @@ class CarRepository extends BaseRepository implements CarRepositoryContract
         return $this->model->latest()->paginate(16);    
     }
 
-    public function getByCategory($slug)
+    public function getByCategory($slug): LengthAwarePaginator
     {
         $category_id = Category::where('slug', $slug)->first()->id;
 

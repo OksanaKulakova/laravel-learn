@@ -20,8 +20,4 @@ class BaseRepository implements BaseRepositoryContract
         return $this->model->find($id);
     }
 
-    public function all(): Collection
-    {
-        return $this->model->all();    
-    }
 }
