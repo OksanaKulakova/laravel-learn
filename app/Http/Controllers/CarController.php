@@ -4,19 +4,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Car;
+use App\Contracts\CarRepositoryContract;
 
 class CarController extends Controller
 {
+    private $carRepository;
+  
+    public function __construct(CarRepositoryContract $carRepository)
+    {
+        $this->carRepository = $carRepository;
+    }
+
     public function index()
     {
-        $products = Car::get();
+        $products = $this->carRepository->all();
 
         return view('pages.products.index', compact('products'));
     }
 
     public function show($id)
     {
-        $car = Car::find($id);
+        $car = $this->carRepository->find($id);
         
         return view('pages.products.show', ['product' => $car]);
     }

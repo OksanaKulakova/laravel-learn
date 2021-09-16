@@ -9,31 +9,41 @@ use App\Models\Article;
 use App\Http\Requests\ArticleRequest;
 use App\Http\Requests\TagRequest;
 use App\Services\TagsSynchronizer;
+use App\Contracts\ArticleRepositoryContract;
 
 class ArticleController extends Controller
 {
+    private $articleRepository;
+  
+    public function __construct(ArticleRepositoryContract $articleRepository)
+    {
+        $this->articleRepository = $articleRepository;
+    }
+
     public function index()
     {
-        $articles = Article::whereNotNull('published_at')->latest()->get();
-
+        $articles = $this->articleRepository->getPublishedArticles();
+        
         return view('pages.articles.index', compact('articles'));
     }
 
-    public function show(Article $article)
+    public function show($slug)
     {
+        $article = $this->articleRepository->findBySlug($slug);
         return view('pages.articles.show', compact('article'));
     }
 
-    public function create(Article $article)
+    public function create()
     {
+        $article = $this->articleRepository->new();
         return view('pages.articles.create', compact('article'));
     }
 
     public function store(ArticleRequest $request, TagRequest $tagRequest, TagsSynchronizer $tagsSynchronizer)
     {
-        $validated = $request->validated();
+        $attributes = $request->validated();
 
-        $article = Article::create($validated);
+        $article = $this->articleRepository->create($attributes);
 
         $tags = $tagRequest->getTagsCollection();
         
@@ -42,26 +52,30 @@ class ArticleController extends Controller
         return redirect()->route('articles.index');
     }
 
-    public function edit(Article $article)
+    public function edit($slug)
     {
+        $article = $this->articleRepository->findBySlug($slug);
         return view('pages.articles.edit', compact('article'));
     }
 
-    public function update(Article $article, ArticleRequest $request, TagRequest $tagRequest, TagsSynchronizer $tagsSynchronizer)
+    public function update($slug, ArticleRequest $request, TagRequest $tagRequest, TagsSynchronizer $tagsSynchronizer)
     {
         $tags = $tagRequest->getTagsCollection();
-        
+
+        $article = $this->articleRepository->findBySlug($slug);
+
         $tagsSynchronizer->sync($tags, $article);
 
-        $validated = $request->validated();
-
-        $article->update($validated);
+        $attributes = $request->validated();
+        
+        $article->update($attributes);
 
         return redirect()->route('articles.index');
     }
 
-    public function destroy(Article $article)
+    public function destroy($slug)
     {
+        $article = $this->articleRepository->findBySlug($slug);
         $article->delete();
 
         return redirect()->route('articles.index');
