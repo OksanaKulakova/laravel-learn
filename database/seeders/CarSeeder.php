@@ -7,6 +7,7 @@ use App\Models\Car;
 use App\Models\CarBody;
 use App\Models\CarClass;
 use App\Models\CarEngine;
+use App\Models\Category;
 
 class CarSeeder extends Seeder
 {

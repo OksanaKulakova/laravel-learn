@@ -27,6 +27,7 @@ Route::resource('articles', ArticleController::class);
 
 Route::group(['prefix' => 'catalog'], function () {
     Route::get('/', [CarController::class, 'index'])->name('products.index');
+    Route::get('/{slug}', [CarController::class, 'category'])->name('products.index');
 });
 
 Route::group(['prefix' => 'products'], function () {
