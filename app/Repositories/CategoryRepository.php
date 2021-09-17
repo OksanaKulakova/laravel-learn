@@ -18,4 +18,14 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryCon
     {
         return $this->model->withDepth()->having('depth', '<', 2)->get()->sortBy('sort')->toTree();
     }
+
+    public function findCategoryIdBySlug($slug): int
+    {
+        return $this->model->where('slug', $slug)->first()->id;
+    }
+
+    public function getCategoryAndChildren($category_id): Collection
+    {
+        return $this->model->descendantsAndSelf($category_id);
+    }
 }
