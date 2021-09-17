@@ -28,4 +28,9 @@ class Car extends Model
     {
         return $this->belongsTo(Image::class);
     }
+
+    public function pictures()
+    {
+        return $this->morphToMany(Image::class, 'imagegable');
+    }
 }

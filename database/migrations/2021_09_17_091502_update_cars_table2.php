@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateCarsTable extends Migration
+class UpdateCarsTable2 extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +14,11 @@ class UpdateCarsTable extends Migration
     public function up()
     {
         Schema::table('cars', function (Blueprint $table) {
-            if (Schema::hasColumn('cars', 'category_id')) {
-                $table->unsignedBigInteger('category_id')->nullable()->change();
+            if (Schema::hasColumn('cars', 'image_id')) {
+                $table->unsignedBigInteger('image_id')->nullable()->change();
             } else {
-                $table->unsignedBigInteger('category_id')->nullable();
-                $table->foreign('category_id')->references('id')->on('categories')->cascadeOnDelete();
+                $table->unsignedBigInteger('image_id')->nullable();
+                $table->foreign('image_id')->references('id')->on('images')->cascadeOnDelete();
             }
             
         });

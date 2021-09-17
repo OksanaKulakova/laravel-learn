@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Article;
 use App\Models\Tag;
+use App\Models\Image;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 
@@ -18,9 +19,13 @@ class ArticleSeeder extends Seeder
     {
         $faker = Factory::create();
 
+        $images = Image::get();
+
         $articles = Article::factory()->count(5)->create([
             'published_at'=> $faker->dateTimeThisMonth(),
+            'image_id' => $images->random()->id,
         ]);
+
         $tags = Tag::factory(5)->create();
 
         foreach ($articles as $article) {
@@ -31,6 +36,8 @@ class ArticleSeeder extends Seeder
             });
         }
         
-        \App\Models\Article::factory(5)->create();
+        \App\Models\Article::factory(5)->create([
+            'image_id' => $images->random()->id,
+        ]);
     }
 }
