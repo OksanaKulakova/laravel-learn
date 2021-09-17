@@ -9,6 +9,10 @@ class Image extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'image',
+    ];
+
     public function articles()
     {
         return $this->hasMany(Article::class);

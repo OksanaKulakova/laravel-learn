@@ -20,6 +20,10 @@
             <x-input.text name="tags" placeholder="Названия тегов" value="{{ old('tags', $tags) }}"/>
         </x-input.group>
 
+        <x-input.group for="title" label="Изображение">
+            <x-input.file name="image" placeholder="Изображение" value="{{ old('image', $article->image) }}"/>
+        </x-input.group>
+
         <x-input.checkbox name="published_at" label="Опубликован" value="{{ old('published_at', $article->published_at) }}"/>
 
         <x-input.group>

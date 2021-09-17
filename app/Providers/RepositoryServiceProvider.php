@@ -8,11 +8,12 @@ use App\Contracts\ArticleRepositoryContract;
 use App\Contracts\CarRepositoryContract;
 use App\Contracts\TagRepositoryContract;
 use App\Contracts\CategoryRepositoryContract;
+use App\Contracts\ImageRepositoryContract;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CarRepository;
 use App\Repositories\TagRepository;
 use App\Repositories\CategoryRepository;
-
+use App\Repositories\ImageRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CarRepositoryContract::class, CarRepository::class);
         $this->app->bind(TagRepositoryContract::class, TagRepository::class);
         $this->app->bind(CategoryRepositoryContract::class, CategoryRepository::class);
+        $this->app->bind(ImageRepositoryContract::class, ImageRepository::class);
     }
 
     public function boot()

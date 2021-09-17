@@ -30,7 +30,8 @@ class ArticleRequest extends FormRequest
             'title' => 'required|min:5|max:100|',
             'description' => 'required|max:255',
             'body' => 'required',
-            'published_at' => 'exclude_if:_method,PATCH|nullable|date',
+            'published_at' => 'nullable|date',
+            'image' => 'nullable|mimetypes:image/jpeg,image/png',
         ];
     }
 
