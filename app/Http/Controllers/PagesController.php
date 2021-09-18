@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Article;
-use App\Models\Car;
+use App\Contracts\ArticleRepositoryContract;
+use App\Contracts\CarRepositoryContract;
 use App\Contracts\BannerRepositoryContract;
 
 class PagesController extends Controller
 {
-    public function index(BannerRepositoryContract $bannerRepository)
+    public function index(ArticleRepositoryContract $articleRepository, CarRepositoryContract $carRepository, BannerRepositoryContract $bannerRepository)
     {
-        $articles = Article::whereNotNull('published_at')->latest('published_at')->limit(3)->get();
-        $products = Car::whereNotNull('is_new')->latest()->limit(4)->get();
+        $articles = $articleRepository->getLatestPublishedArticles(3);
+        $products = $carRepository->getNewCars(4);
         $banners = $bannerRepository->getBanners();
 
         return view('pages/homepage', compact('articles', 'products', 'banners'));
