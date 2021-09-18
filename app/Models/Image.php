@@ -27,4 +27,5 @@ class Image extends Model
     {
         return $this->morphedByMany(Car::class, 'imagegable');
     }
+
 }
