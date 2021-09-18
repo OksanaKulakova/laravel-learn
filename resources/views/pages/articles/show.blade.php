@@ -8,7 +8,7 @@
         <div class="space-y-4">
 
             @if($article->image)
-                <img src="{{ asset('storage/' . $article->image->image) }}" alt="{{$article->title}}" title="{{$article->title}}">
+                <img src="{{ Storage::url($article->image->image) }}" alt="{{$article->title}}" title="{{$article->title}}">
             @else
                 <img src="/assets/images/no_image.png" alt="" title="">
             @endif

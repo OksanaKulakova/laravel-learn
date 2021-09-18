@@ -3,7 +3,7 @@
 <div class="bg-white w-full border border-gray-100 rounded overflow-hidden shadow-lg hover:shadow-2xl pt-4">
     <a class="block w-full h-40" href="{{ route('products.show', $product) }}">
         @if($product->image)
-            <img class="w-full h-full hover:opacity-90 object-cover" src="{{ asset('storage/' . $product->image->image) }}" alt="{{$product->name}}">
+            <img class="w-full h-full hover:opacity-90 object-cover" src="{{ Storage::url($product->image->image) }}" alt="{{$product->name}}">
         @else
             <img src="/assets/images/no_image.png" alt="no-image" title="no-image">
         @endif

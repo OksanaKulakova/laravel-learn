@@ -13,14 +13,14 @@
             <div class="col-span-3 border-r-0 sm:border-r pb-4 px-4 text-center catalog-detail-slick-preview" data-slick-carousel-detail>
                 <div class="mb-4 border rounded" data-slick-carousel-detail-items>
                     @if($product->image)
-                        <img class="w-full" src="{{ asset('storage/' . $product->image->image) }}" alt="{{ $product->name }}" title="{{ $product->name }}">
+                        <img class="w-full" src="{{ Storage::url($product->image->image) }}" alt="{{ $product->name }}" title="{{ $product->name }}">
                     @else
                         <img class="w-full" src="/assets/images/no_image.png" alt="no-image" title="no-image">
                     @endif
 
                     @if($product->pictures)
                         @foreach ($product->pictures as $picture)
-                            <img class="w-full" src="{{ asset('storage/' . $picture->image) }}" alt="{{ $product->name }}" title="{{ $product->name }}">
+                            <img class="w-full" src="{{ Storage::url($picture->image) }}" alt="{{ $product->name }}" title="{{ $product->name }}">
                         @endforeach
                     @endif
 
