@@ -9,6 +9,4 @@ interface BaseRepositoryContract
 {
    public function find($id): ?Model;
 
-   public function all(): Collection;
-
 }

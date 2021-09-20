@@ -29,4 +29,11 @@ class CarController extends Controller
         return view('pages.products.show', ['product' => $car]);
     }
 
+    public function category($slug)
+    {
+        $products = $this->carRepository->getByCategory($slug);
+
+        return view('pages.products.index', compact('products'));
+    }
+
 }
