@@ -7,7 +7,11 @@
         <a class="hover:text-orange" href="{{ route('articles.edit', $article) }}">Редактировать</a>
         <div class="space-y-4">
 
-            <img src="/assets/pictures/car_new_stinger.png" alt="" title="">
+            @if($article->image)
+                <img src="{{ Storage::url($article->image->image) }}" alt="{{$article->title}}" title="{{$article->title}}">
+            @else
+                <img src="/assets/images/no_image.png" alt="" title="">
+            @endif
 
             @if($article->tags)
                 <x-panels.tags :tags="$article->tags"/>
