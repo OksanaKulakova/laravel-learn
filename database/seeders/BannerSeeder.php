@@ -22,7 +22,7 @@ class BannerSeeder extends Seeder
         ];
 
         foreach($banners as $banner){
-            Banner::factory()->create(['image' => $banner, 'link' => '/products/139']);
+            Banner::factory()->for(Image::create(['image' => $banner]))->create(['link' => '/products/139']);
         }
     }
 }

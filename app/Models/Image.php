@@ -28,4 +28,9 @@ class Image extends Model
         return $this->morphedByMany(Car::class, 'imagegable');
     }
 
+    public function banner()
+    {
+        return $this->hasOne(Banner::class);
+    }
+
 }
