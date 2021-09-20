@@ -13,19 +13,22 @@ use App\Http\Requests\TagRequest;
 use App\Services\TagsSynchronizer;
 use App\Services\ImagesSynchronizer;
 use App\Contracts\ArticleRepositoryContract;
+use App\Events\ArticlesEvents;
 
 class ArticleController extends Controller
 {
     private $articleRepository;
+    protected int $page;
   
-    public function __construct(ArticleRepositoryContract $articleRepository)
+    public function __construct(ArticleRepositoryContract $articleRepository, Request $request)
     {
         $this->articleRepository = $articleRepository;
+        $this->page = $request->page ? : 1;
     }
 
     public function index()
     {
-        $articles = $this->articleRepository->getPublishedArticles();
+        $articles = $this->articleRepository->getPublishedArticles($this->page);
         
         return view('pages.articles.index', compact('articles'));
     }
@@ -54,6 +57,8 @@ class ArticleController extends Controller
 
         $imagesSynchronizer->sync($request->file('image'), $article);
 
+        event(new ArticlesEvents($article));
+
         return redirect()->route('articles.index');
     }
 
@@ -76,6 +81,8 @@ class ArticleController extends Controller
         
         $article->update($attributes);
 
+        event(new ArticlesEvents($article));
+
         return redirect()->route('articles.index');
     }
 
@@ -83,6 +90,7 @@ class ArticleController extends Controller
     {
         $article = $this->articleRepository->findBySlug($slug);
         $article->delete();
+        event(new ArticlesEvents($article));
 
         return redirect()->route('articles.index');
     }

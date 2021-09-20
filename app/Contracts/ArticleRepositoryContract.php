@@ -18,7 +18,7 @@ interface ArticleRepositoryContract extends BaseRepositoryContract
 
    public function new(): Model;
 
-   public function getPublishedArticles(): LengthAwarePaginator;
+   public function getPublishedArticles(int $page, int $perPage): LengthAwarePaginator;
 
    public function getLatestPublishedArticles(int $count): Collection;
 
