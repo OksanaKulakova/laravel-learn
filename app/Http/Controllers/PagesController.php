@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Contracts\ArticleRepositoryContract;
 use App\Contracts\CarRepositoryContract;
 use App\Contracts\BannerRepositoryContract;
+use App\Models\Car;
 
 class PagesController extends Controller
 {
@@ -40,6 +41,8 @@ class PagesController extends Controller
 
     public function clients()
     {
-        return view('pages/clients');
+        $products = Car::get();
+        
+        return view('pages/clients', compact('products'));
     }
 }
