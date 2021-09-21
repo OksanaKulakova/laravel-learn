@@ -20,4 +20,6 @@ interface ArticleRepositoryContract extends BaseRepositoryContract
 
    public function getPublishedArticles(): LengthAwarePaginator;
 
+   public function getLatestPublishedArticles(int $count): Collection;
+
 }

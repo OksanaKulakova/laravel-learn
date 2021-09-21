@@ -44,4 +44,9 @@ class ArticleRepository extends BaseRepository implements ArticleRepositoryContr
     {
         return $this->model->whereNotNull('published_at')->latest('published_at')->paginate(5);
     }
+
+    public function getLatestPublishedArticles($count): Collection
+    {
+        return $this->model->whereNotNull('published_at')->latest('published_at')->limit($count)->get();
+    }
 }

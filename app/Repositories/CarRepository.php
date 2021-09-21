@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Car;
 use App\Contracts\CategoryRepositoryContract;
 use App\Contracts\CarRepositoryContract;
+use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class CarRepository extends BaseRepository implements CarRepositoryContract
@@ -28,5 +29,10 @@ class CarRepository extends BaseRepository implements CarRepositoryContract
         $categories = $this->categoryRepository->getCategoryAndChildren($category_id);
 
         return $this->model->whereIn('category_id', $categories->pluck('id'))->latest()->paginate(16);
+    }
+
+    public function getNewCars($count): Collection
+    {
+        return $this->model->whereNotNull('is_new')->latest()->limit($count)->get();
     }
 }
