@@ -73,4 +73,9 @@ class PagesController extends Controller
         
         return view('pages/clients', compact('averagePrice', 'averageDiscountedPrice', 'expensiveModel', 'salons', 'engines', 'classes', 'collect1', 'collect2'));
     }
+
+    public function account()
+    {
+        return view('pages/account');
+    }
 }
