@@ -7,6 +7,7 @@ use App\Contracts\ArticleRepositoryContract;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Cache;
 
 class ArticleRepository extends BaseRepository implements ArticleRepositoryContract
 {
@@ -17,7 +18,12 @@ class ArticleRepository extends BaseRepository implements ArticleRepositoryContr
 
     public function findBySlug($slug): ?Model
     {
-        return $this->model->where('slug', $slug)->first();
+        return Cache::tags('articles')->remember(
+            'article_slug_' . $slug,
+            now()->addHour(),
+            function () use ($slug) {
+                return $this->model->where('slug', $slug)->first();
+            }); 
     }
 
     public function create(array $attributes): Model
@@ -40,13 +46,23 @@ class ArticleRepository extends BaseRepository implements ArticleRepositoryContr
         return $this->model;
     }
 
-    public function getPublishedArticles(): LengthAwarePaginator
+    public function getPublishedArticles(int $page, int $perPage = 5): LengthAwarePaginator
     {
-        return $this->model->whereNotNull('published_at')->latest('published_at')->paginate(5);
+        return Cache::tags('articles')->remember(
+            'articles_published_page_' . $page,
+            now()->addHour(),
+            function () use ($perPage, $page) {
+                return $this->model->whereNotNull('published_at')->latest('published_at')->paginate($perPage, page: $page);
+            }); 
     }
 
     public function getLatestPublishedArticles($count): Collection
     {
-        return $this->model->whereNotNull('published_at')->latest('published_at')->limit($count)->get();
+        return Cache::tags('articles')->remember(
+            'articles_latest_' . $count,
+            now()->addHour(),
+            function () use ($count) {
+                return $this->model->whereNotNull('published_at')->latest('published_at')->limit($count)->get();
+            });
     }
 }

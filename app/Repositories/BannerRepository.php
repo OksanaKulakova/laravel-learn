@@ -6,6 +6,7 @@ use App\Models\Banner;
 use App\Contracts\BannerRepositoryContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
 class BannerRepository extends BaseRepository implements BannerRepositoryContract
 {
@@ -16,6 +17,11 @@ class BannerRepository extends BaseRepository implements BannerRepositoryContrac
 
     public function getBanners(): Collection
     {
-        return $this->model->latest()->get();
+        return Cache::tags('banners')->remember(
+            'banners',
+            now()->addHour(),
+            function () {
+                return $this->model->latest()->get();
+            });  
     }
 }
