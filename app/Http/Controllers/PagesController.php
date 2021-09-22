@@ -42,7 +42,35 @@ class PagesController extends Controller
     public function clients()
     {
         $products = Car::get();
+
+        $averagePrice = $products->avg('price');
+
+        $averageDiscountedPrice = $products->whereNotNull('old_price')->avg('price');
+
+        $expensiveModel = $products->sortByDesc('price')->first();
+
+        $salons = $products->map(function ($item) { return $item->salon;})->unique()->values();
+
+        $engines = $products->map(function ($item) { return $item->carEngine->name;})->unique()->sort()->values();
+
+        $classes = $products->pluck('carClass.name', 'carClass.name')->unique()->sort();
+
+        $collect1 = $products->whereNotNull('old_price')
+            ->filter(function ($item) {
+                return stripos($item->name, 5) || stripos($item->name, 6) || stripos($item->carEngine->name, 5) || stripos($item->carEngine->name, 6) || stripos($item->kpp, 5) || stripos($item->kpp, 6);
+            });
+
+        $collect2 = $products->whereNull('old_price')
+            ->map(function ($item) {
+                return $item->carBody;
+            })
+            ->unique()
+            ->map(function ($item) use ($products) {
+                return [$item->name => $products->where('car_body_id', $item->id)->avg('price')];
+            })
+            ->collapse()
+            ->sort();
         
-        return view('pages/clients', compact('products'));
+        return view('pages/clients', compact('averagePrice', 'averageDiscountedPrice', 'expensiveModel', 'salons', 'engines', 'classes', 'collect1', 'collect2'));
     }
 }
