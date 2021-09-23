@@ -1,3 +1,7 @@
+@php
+    $tags = isset($article) ? $article->tags->pluck('name')->implode(', ') : null;
+@endphp
+
 <div class="mt-8 max-w-md">
     <div class="grid grid-cols-1 gap-6">
         <x-input.group for="title" label="Название новости">
@@ -10,6 +14,14 @@
 
         <x-input.group for="body" label="Детальное описание">
             <x-input.textarea name="body" placeholder="Детальное описание" value="{{ old('body', $article->body) }}"/>
+        </x-input.group>
+
+        <x-input.group for="tags" label="Названия тегов (через запятую)">
+            <x-input.text name="tags" placeholder="Названия тегов" value="{{ old('tags', $tags) }}"/>
+        </x-input.group>
+
+        <x-input.group for="title" label="Изображение">
+            <x-input.file name="image" placeholder="Изображение" value="{{ old('image', $article->image) }}"/>
         </x-input.group>
 
         <x-input.checkbox name="published_at" label="Опубликован" value="{{ old('published_at', $article->published_at) }}"/>

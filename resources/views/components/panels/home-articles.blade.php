@@ -1,4 +1,5 @@
 @props(['articles'])
+
 @if($articles)
 <section class="news-block-inverse px-6 py-4">
     <div>
@@ -9,7 +10,11 @@
         @foreach($articles as $article)
             <div class="w-full flex">
                 <div class="h-48 lg:h-auto w-32 sm:w-60 lg:w-32 xl:w-48 flex-none text-center overflow-hidden">
-                    <a class="block w-full h-full hover:opacity-75" href="{{ route('articles.show', $article) }}"><img src="/assets/pictures/car_ceed.png" class="bg-white bg-opacity-25 w-full h-full object-contain" alt=""></a>
+                    @if($article->image)
+                        <a class="block w-full h-full hover:opacity-75" href="{{ route('articles.show', $article) }}"><img src="{{ asset('storage/' . $article->image->image) }}" class="bg-white bg-opacity-25 w-full h-full object-contain" alt=""></a>
+                    @else
+                        <a class="block w-full h-full hover:opacity-75" href="{{ route('articles.show', $article) }}"><img src="/assets/images/no_image.png" class="bg-white bg-opacity-25 w-full h-full object-contain" alt=""></a>
+                    @endif
                 </div>
                 <div class="px-4 flex flex-col justify-between leading-normal">
                     <div class="mb-8">
@@ -20,9 +25,9 @@
                             <a class="hover:text-orange" href="{{ route('articles.show', $article) }}">{{ $article->description }}</a>
                         </p>
                     </div>
-                    <div>
-                        <span class="text-sm text-white italic rounded bg-orange px-2">Киа Seed</span>
-                    </div>
+                    @if($article->tags)
+                        <x-panels.tags :tags="$article->tags"/>
+                    @endif
                     <div class="flex items-center">
                         <p class="text-sm text-gray-400 italic">{{ $article->published_at->format('d M Y') }}</p>
                     </div>
