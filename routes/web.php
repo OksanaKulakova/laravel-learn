@@ -33,3 +33,7 @@ Route::group(['prefix' => 'catalog'], function () {
 Route::group(['prefix' => 'products'], function () {
     Route::get('/{id}', [CarController::class, 'show'])->name('products.show');
 });
+
+require __DIR__.'/auth.php';
+
+Route::get('/account', [PagesController::class, 'account'])->name('account')->middleware('auth');
