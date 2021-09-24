@@ -28,6 +28,8 @@ class SendArticleCreatedNotification
      */
     public function handle(ArticleCreated $event)
     {
-        Mail::send(new MailArticleCreated($event->article));
+        if ($email = config('mail.reply_to.address')) {
+            Mail::to($email)->send(new MailArticleCreated($event->article));
+        }
     }
 }

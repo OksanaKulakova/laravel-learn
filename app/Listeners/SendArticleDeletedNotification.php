@@ -28,6 +28,8 @@ class SendArticleDeletedNotification
      */
     public function handle(ArticleDeleted $event)
     {
-        Mail::send(new MailArticleDeleted($event->article));
+        if ($email = config('mail.reply_to.address')) {
+            Mail::to($email)->send(new MailArticleDeleted($event->article));
+        }
     }
 }
