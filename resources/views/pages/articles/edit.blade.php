@@ -2,6 +2,10 @@
 
 @section('title', 'Редактирование новости')
 
+@section('breadcrumbs')
+    {{ Breadcrumbs::render('articles.edit', $article['title']) }}
+@endsection
+
 @section('content-page') 
 
     <x-alerts.error />

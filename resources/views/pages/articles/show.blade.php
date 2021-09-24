@@ -2,6 +2,10 @@
 
 @section('title', $article['title'])
 
+@section('breadcrumbs')
+    {{ Breadcrumbs::render('articles.show', $article['title']) }}
+@endsection
+
 @section('content-page')
     @if($article)
         <a class="hover:text-orange" href="{{ route('articles.edit', $article) }}">Редактировать</a>

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('breadcrumbs')
+    {{ Breadcrumbs::render() }}
+@endsection
+
 @section('content')
 
     <div class="flex-1 grid grid-cols-4 lg:grid-cols-5 border-b">
