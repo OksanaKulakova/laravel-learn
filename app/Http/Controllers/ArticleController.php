@@ -39,9 +39,10 @@ class ArticleController extends Controller
         return view('pages.articles.show', compact('article'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
         $article = $this->articleRepository->new();
+        abort_if(auth()->user()->cannot('create', $article), 403);
         return view('pages.articles.create', compact('article'));
     }
 
@@ -65,6 +66,9 @@ class ArticleController extends Controller
     public function edit($slug)
     {
         $article = $this->articleRepository->findBySlug($slug);
+
+        abort_if(auth()->user()->cannot('update', $article), 403);
+        
         return view('pages.articles.edit', compact('article'));
     }
 
@@ -89,7 +93,11 @@ class ArticleController extends Controller
     public function destroy($slug)
     {
         $article = $this->articleRepository->findBySlug($slug);
+
+        abort_if(auth()->user()->cannot('delete', $article), 403);
+
         $article->delete();
+
         event(new ArticlesEvents($article));
 
         return redirect()->route('articles.index');
