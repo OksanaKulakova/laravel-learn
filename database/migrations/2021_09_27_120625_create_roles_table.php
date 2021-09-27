@@ -3,6 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Role;
+use App\Models\User;
 
 class CreateRolesTable extends Migration
 {
@@ -24,22 +26,20 @@ class CreateRolesTable extends Migration
             $table->unsignedBigInteger('role_id');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreign('role_id')->references('id')->on('roles')->cascadeOnDelete();
+            $table->timestamps();
         });
 
-        $role_id = DB::table('roles')->insertGetId([
+        $role = Role::factory()->create([
             'name' => 'admin',
         ]);
 
-        $user_id = DB::table('users')->insertGetId([
-            'name' => 'admin',
-            'email' => 'admin@example.com',
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        ]);
-
-        DB::table('role_user')->insert([
-            'user_id' => $user_id,
-            'role_id' => $role_id,
-        ]);
+        $user = User::factory()
+            ->hasAttached($role)
+            ->create([
+                'name' => 'admin',
+                'email' => 'admin@example.com',
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+            ]);
     }
 
     /**
