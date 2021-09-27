@@ -28,4 +28,9 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryCon
     {
         return $this->model->descendantsAndSelf($category_id);
     }
+
+    public function findCategoryBySlug($slug): Model
+    {
+        return $this->model->where('slug', $slug)->first();
+    }
 }
