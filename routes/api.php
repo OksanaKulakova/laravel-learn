@@ -20,8 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'v1', 'middleware' => 'shield'], function () {
+    Route::apiResource('cars', CarController::class);
     Route::get('/cars', [CarController::class, 'cars']);
-    Route::post('/cars', [CarController::class, 'store']);
-    Route::patch('/cars/{car}', [CarController::class, 'update']);
-    Route::delete('/cars/{car}', [CarController::class, 'destroy']);
 });
