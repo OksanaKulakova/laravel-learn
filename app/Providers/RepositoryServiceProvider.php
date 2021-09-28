@@ -10,12 +10,14 @@ use App\Contracts\TagRepositoryContract;
 use App\Contracts\CategoryRepositoryContract;
 use App\Contracts\ImageRepositoryContract;
 use App\Contracts\BannerRepositoryContract;
+use App\Contracts\SalonRepositoryContract;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CarRepository;
 use App\Repositories\TagRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\ImageRepository;
 use App\Repositories\BannerRepository;
+use App\Repositories\SalonRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -32,6 +34,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CategoryRepositoryContract::class, CategoryRepository::class);
         $this->app->bind(ImageRepositoryContract::class, ImageRepository::class);
         $this->app->bind(BannerRepositoryContract::class, BannerRepository::class);
+        $this->app->bind(SalonRepositoryContract::class, SalonRepository::class);
     }
 
     public function boot()
@@ -42,6 +45,15 @@ class RepositoryServiceProvider extends ServiceProvider
 
             $view->with([
                 'categories' => $categories,
+            ]);
+        });
+
+        View::composer('layouts.parts.footer', function ($view) {
+            $salonRepository = $this->app->make(SalonRepositoryContract::class);
+            $salons = $salonRepository->getRandomSalons();
+
+            $view->with([
+                'salons' => $salons,
             ]);
         });
     }

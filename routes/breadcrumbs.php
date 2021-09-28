@@ -84,3 +84,8 @@ Breadcrumbs::for('account', function (BreadcrumbTrail $trail) {
     $trail->parent('index');
     $trail->push('Личный кабинет', route('account'));
 });
+
+Breadcrumbs::for('salons', function (BreadcrumbTrail $trail) {
+    $trail->parent('index');
+    $trail->push('Наши салоны', route('salons'));
+});
