@@ -20,18 +20,14 @@ class TagRepository extends BaseRepository implements TagRepositoryContract
 
     public function tagHasMostArticles(): string
     {
-        $tags = $this->model->withCount('articles')->get();
+        $tag = $this->model->withCount('articles')->orderByDesc('articles_count')->first();
 
-        $tag = $tags->where('articles_count', $tags->max('articles_count'))->first()->name;
-
-        return $tag;
+        return $tag->name;
     }
 
     public function getAvgCountArticle()
     {
-        $tags = $this->model->withCount('articles')->get();
-        $tags = $tags->where('articles_count', '>', 0);
-        $avg = $tags->avg('articles_count');
+        $avg = $this->model->has('articles')->withCount('articles')->get()->avg('articles_count');
 
         return $avg;
     }
