@@ -65,4 +65,30 @@ class ArticleRepository extends BaseRepository implements ArticleRepositoryContr
                 return $this->model->whereNotNull('published_at')->latest('published_at')->limit($count)->get();
             });
     }
+
+    public function getCountArticles(): int
+    {
+        return $this->model->count();
+    }
+
+    public function getLongestArticle()
+    {
+        $article = $this->model->orderByRaw('CHAR_LENGTH(body) DESC')->first();
+
+        return $article->title . ' id: ' . $article->id . ' длина: ' .  strlen($article->body);
+    }
+
+    public function getShortestArticle()
+    {
+        $article = $this->model->orderByRaw('CHAR_LENGTH(body)')->first();
+
+        return $article->title . ' id: ' . $article->id . ' длина: ' .  strlen($article->body);
+    }
+
+    public function getMostTaggedArticle()
+    {
+        $article = $this->model->withCount('tags')->orderByDesc('tags_count')->first();
+
+        return $article->title . ' id: ' . $article->id . ' количество тегов: ' .  $article->tags_count;
+    }
 }
