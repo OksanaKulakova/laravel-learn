@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
 use App\Contracts\SalonRepositoryContract;
-use App\Services\SalonsClientService;
+use App\Contracts\SalonsClientServiceContract;
 
 class SalonRepository extends BaseRepository implements SalonRepositoryContract
 {    
     protected $salonsClientService;
 
-    public function __construct(SalonsClientService $salonsClientService)
+    public function __construct(SalonsClientServiceContract $salonsClientService)
     {
         $this->salonsClientService = $salonsClientService;
     }

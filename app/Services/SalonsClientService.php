@@ -3,8 +3,9 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
+use App\Contracts\SalonsClientServiceContract;
 
-class SalonsClientService
+class SalonsClientService implements SalonsClientServiceContract
 {
     private $client;
 

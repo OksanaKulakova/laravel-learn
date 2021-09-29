@@ -11,6 +11,7 @@ use App\Contracts\CategoryRepositoryContract;
 use App\Contracts\ImageRepositoryContract;
 use App\Contracts\BannerRepositoryContract;
 use App\Contracts\SalonRepositoryContract;
+use App\Contracts\SalonsClientServiceContract;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CarRepository;
 use App\Repositories\TagRepository;
@@ -18,6 +19,7 @@ use App\Repositories\CategoryRepository;
 use App\Repositories\ImageRepository;
 use App\Repositories\BannerRepository;
 use App\Repositories\SalonRepository;
+use App\Services\SalonsClientService;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -35,6 +37,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ImageRepositoryContract::class, ImageRepository::class);
         $this->app->bind(BannerRepositoryContract::class, BannerRepository::class);
         $this->app->bind(SalonRepositoryContract::class, SalonRepository::class);
+        $this->app->bind(SalonsClientServiceContract::class, SalonsClientService::class);
     }
 
     public function boot()
