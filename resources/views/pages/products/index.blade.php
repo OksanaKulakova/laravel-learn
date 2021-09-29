@@ -2,6 +2,10 @@
 
 @section('title', 'Каталог')
 
+@section('breadcrumbs')
+    {{ Breadcrumbs::render() }}
+@endsection
+
 @section('content') 
     
     <div class="p-4">

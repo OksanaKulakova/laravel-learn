@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Contracts\ArticleRepositoryContract;
 use App\Contracts\CarRepositoryContract;
 use App\Contracts\BannerRepositoryContract;
+use App\Contracts\SalonRepositoryContract;
 use App\Models\Car;
 
 class PagesController extends Controller
@@ -77,5 +78,12 @@ class PagesController extends Controller
     public function account()
     {
         return view('pages/account');
+    }
+
+    public function salons(SalonRepositoryContract $salonRepository)
+    {
+        $salons = $salonRepository->getSalons();
+
+        return view('pages/salons', compact('salons'));
     }
 }

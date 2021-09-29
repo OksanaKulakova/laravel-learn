@@ -62,4 +62,19 @@ class CarRepository extends BaseRepository implements CarRepositoryContract
                 return $this->model->whereNotNull('is_new')->latest()->limit($count)->get();
             });
     }
+
+    public function getCountCars(): int
+    {
+        return $this->model->count();
+    }
+
+    public function getCars(): Collection
+    {
+        return $this->model->get();
+    }
+
+    public function create(array $attributes): Model
+    {
+        return $this->model->create($attributes);
+    }
 }
