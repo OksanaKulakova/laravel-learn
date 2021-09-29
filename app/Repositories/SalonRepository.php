@@ -18,7 +18,7 @@ class SalonRepository extends BaseRepository implements SalonRepositoryContract
         $this->salonsClientService = $salonsClientService;
     }
 
-    public function getSalons()
+    public function getSalons(): ?array
     {
         return Cache::tags('salons')->remember(
             'salons_all',
@@ -28,7 +28,7 @@ class SalonRepository extends BaseRepository implements SalonRepositoryContract
             });
     }
 
-    public function getRandomSalons()
+    public function getRandomSalons(): ?array
     {
         return Cache::tags('salons')->remember(
             'salons_random',
